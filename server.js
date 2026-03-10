@@ -34,7 +34,7 @@ const upload = multer({
 });
 
 // ── MongoDB Connection ────────────────────────────────────────
-const MONGO_URI = "mongodb+srv://demosilvertouch_db_user:MotoBhai1234@ecommerace.odycivh.mongodb.net/jewellery_shop?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://demosilvertouch_db_user:MotoBhai1234@ecommerace.odycivh.mongodb.net/jewellery_shop?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ MongoDB Atlas Connected!"))
