@@ -34,7 +34,7 @@ const upload = multer({
 });
 
 // ── MongoDB Connection ────────────────────────────────────────
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://demosilvertouch_db_user:MotoBhai1234@ecommerace.odycivh.mongodb.net/jewellery_shop?retryWrites=true&w=majority";
+const MONGO_URI = "mongodb+srv://demosilvertouch_db_user:MotoBhai1234@ecommerace.odycivh.mongodb.net/jewellery_shop?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log("✅ MongoDB Atlas Connected!"))
@@ -144,6 +144,59 @@ app.post("/api/seed", async (req, res) => {
     ];
     await Product.insertMany(sampleProducts);
     res.json({ success: true, message: `✅ ${sampleProducts.length} products seeded!` });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// ── Feedback Schema ───────────────────────────────────────────
+const feedbackSchema = new mongoose.Schema({
+  name:    { type: String, required: true },
+  phone:   { type: String, required: true },
+  email:   { type: String, default: "" },
+  message: { type: String, required: true },
+  rating:  { type: Number, default: 5 },
+  status:  { type: String, default: "New" }, // New, Read, Replied
+}, { timestamps: true });
+
+const Feedback = mongoose.model("Feedback", feedbackSchema);
+
+// POST - Submit feedback
+app.post("/api/feedback", async (req, res) => {
+  try {
+    const feedback = new Feedback(req.body);
+    await feedback.save();
+    res.status(201).json({ success: true, message: "✅ Feedback submitted!" });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+});
+
+// GET - All feedbacks (Admin)
+app.get("/api/feedback", async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find().sort({ createdAt: -1 });
+    res.json({ success: true, data: feedbacks });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+// PUT - Update feedback status
+app.put("/api/feedback/:id", async (req, res) => {
+  try {
+    const feedback = await Feedback.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json({ success: true, data: feedback });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
+  }
+});
+
+// DELETE - Delete feedback
+app.delete("/api/feedback/:id", async (req, res) => {
+  try {
+    await Feedback.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "Feedback deleted!" });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

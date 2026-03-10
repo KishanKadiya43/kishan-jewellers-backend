@@ -480,9 +480,89 @@ function AdminPage() {
           </div>
         </div>
       </div>
+      <FeedbackList />
     </div>
   );
 }
+
+// ── Feedback List (Admin) ─────────────────────────────────────
+function FeedbackList() {
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadFeedbacks = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/feedback`);
+      const json = await res.json();
+      if (json.success) setFeedbacks(json.data);
+    } catch {}
+    setLoading(false);
+  };
+
+  useEffect(() => { loadFeedbacks(); }, []);
+
+  const deleteFeedback = async (id) => {
+    await fetch(`${API}/feedback/${id}`, { method: "DELETE" });
+    loadFeedbacks();
+  };
+
+  const markRead = async (id) => {
+    await fetch(`${API}/feedback/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "Read" }),
+    });
+    loadFeedbacks();
+  };
+
+  return (
+    <div style={{ maxWidth: 1100, margin: "40px auto 0", padding: "0 0 40px" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+        <div style={{ fontFamily: "Playfair Display", fontSize: 22, fontWeight: 700, color: "#1a1208" }}>
+          Feedback ({feedbacks.length})
+        </div>
+        <button onClick={loadFeedbacks} style={{ padding: "8px 16px", border: "1.5px solid #e8d8b8", borderRadius: 8, background: "#fffdf7", cursor: "pointer", fontSize: 12, color: "#8a6f4e" }}>
+          Refresh
+        </button>
+      </div>
+      {loading ? (
+        <div style={{ textAlign: "center", padding: 30, color: "#8a6f4e" }}>Loading...</div>
+      ) : feedbacks.length === 0 ? (
+        <div style={{ textAlign: "center", padding: 40, background: "#fffdf7", border: "1px solid #f0e0c0", borderRadius: 14, color: "#8a6f4e" }}>
+          No feedback yet!
+        </div>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(320px,1fr))", gap: 16 }}>
+          {feedbacks.map(f => (
+            <div key={f._id} style={{ background: "#fffdf7", border: "1.5px solid #f0e0c0", borderRadius: 14, padding: "18px" }}>
+              <div style={{ fontWeight: 700, fontSize: 15, color: "#1a1208", marginBottom: 4 }}>👤 {f.name}</div>
+              <div style={{ fontSize: 12, color: "#8a6f4e", marginBottom: 4 }}>📞 {f.phone}</div>
+              {f.email && <div style={{ fontSize: 12, color: "#8a6f4e", marginBottom: 4 }}>✉️ {f.email}</div>}
+              <div style={{ fontSize: 13, color: "#5a4030", lineHeight: 1.7, padding: "10px 12px", background: "#fdf6ec", borderRadius: 8, marginBottom: 10 }}>
+                {f.message}
+              </div>
+              <div style={{ fontSize: 11, color: "#aaa", marginBottom: 10 }}>
+                {new Date(f.createdAt).toLocaleString("en-IN")}
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                {f.status === "New" && (
+                  <button onClick={() => markRead(f._id)} style={{ flex: 1, padding: "7px", borderRadius: 8, border: "1.5px solid #c9a84c", background: "#fffdf7", color: "#c9a84c", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>
+                    Mark Read
+                  </button>
+                )}
+                <button onClick={() => deleteFeedback(f._id)} style={{ flex: 1, padding: "7px", borderRadius: 8, border: "1.5px solid #fcc", background: "#fff0f0", color: "#c0392b", cursor: "pointer", fontSize: 12, fontWeight: 600 }}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 // ── About Page ───────────────────────────────────────────────
 function AboutPage() {
@@ -511,9 +591,28 @@ function AboutPage() {
 
 // ── Contact Page ─────────────────────────────────────────────
 function ContactPage() {
-  const [form, setForm] = useState({ name: "", phone: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", message: "", rating: 5 });
   const [sent, setSent] = useState(false);
-  const handle = () => { if (!form.name || !form.phone) return; setSent(true); setTimeout(() => setSent(false), 4000); setForm({ name: "", phone: "", message: "" }); };
+  const [loading, setLoading] = useState(false);
+
+  const handle = async () => {
+    if (!form.name || !form.phone || !form.message) return alert("Please fill Name, Phone and Message!");
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/feedback`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const json = await res.json();
+      if (json.success) {
+        setSent(true);
+        setTimeout(() => setSent(false), 4000);
+        setForm({ name: "", phone: "", email: "", message: "", rating: 5 });
+      }
+    } catch { alert("Cannot connect!"); }
+    setLoading(false);
+  };
   const inputStyle = { width: "100%", padding: "13px 16px", border: "1.5px solid #e8d8b8", borderRadius: 10, fontFamily: "'DM Sans',sans-serif", fontSize: 14, background: "#fffdf7", color: "#3d2b1f", outline: "none", boxSizing: "border-box" };
   return (
     <div style={{ width: "100%", background: "#fdf6ec" }}>
