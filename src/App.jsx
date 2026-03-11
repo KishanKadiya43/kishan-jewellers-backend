@@ -114,7 +114,7 @@ function HomePage({ goTo }) {
           </div>
           <div style={{ fontSize: 11, letterSpacing: 6, textTransform: "uppercase", color: "#c9a84c", marginBottom: 14, animation: "fadeUp 0.7s ease 0.2s both" }}>Est. 2024 · Premium Jewellery</div>
           <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(42px,6vw,80px)", fontWeight: 900, color: "#1a1208", lineHeight: 1.05, letterSpacing: "-1px", marginBottom: 22, animation: "fadeUp 0.8s ease 0.3s both" }}>
-            Welcome to<br /><span style={shimmerStyle}>Kiran Jewellers</span>
+            Welcome to<br /><span style={shimmerStyle}>Kishan Jewellers</span>
           </h1>
           <p style={{ fontSize: 16, color: "#6b5040", lineHeight: 1.8, marginBottom: 40, animation: "fadeUp 0.8s ease 0.42s both" }}>
             Exquisite rings, necklaces, bracelets &amp; earrings —<br />crafted to celebrate every moment of your life.
@@ -572,11 +572,11 @@ function AboutPage() {
         <div style={eyebrow}>Our Story</div>
         <h2 style={pageTitle}>About <span style={shimmerStyle}>Us</span></h2>
         <div style={{ fontSize: 56, margin: "24px auto" }}>💍</div>
-        <p style={{ fontSize: 16, color: "#6b5040", maxWidth: 600, margin: "0 auto", lineHeight: 1.8 }}>Kiran Jewellers has been crafting exquisite jewellery since 2010.</p>
+        <p style={{ fontSize: 16, color: "#6b5040", maxWidth: 600, margin: "0 auto", lineHeight: 1.8 }}>Kishan Jewellers has been crafting exquisite jewellery since 2010.</p>
       </div>
       <div style={{ padding: "60px 40px", maxWidth: 1000, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 24 }}>
-          {[["💛","Who We Are","Kiran Jewellers carries the legacy of traditional Indian craftsmanship."],["🔍","Our Promise","We use only certified 22K & 18K gold, authentic gemstones, and conflict-free diamonds."],["🛠️","Our Craft","Our master craftsmen bring decades of experience creating beautiful jewellery."]].map(([icon, title, text]) => (
+          {[["💛","Who We Are","Kishan Jewellers carries the legacy of traditional Indian craftsmanship."],["🔍","Our Promise","We use only certified 22K & 18K gold, authentic gemstones, and conflict-free diamonds."],["🛠️","Our Craft","Our master craftsmen bring decades of experience creating beautiful jewellery."]].map(([icon, title, text]) => (
             <div key={title} style={{ background: "#fffdf7", border: "1px solid #f0e0c0", borderRadius: 16, padding: "28px" }}>
               <div style={{ fontSize: 32, marginBottom: 12 }}>{icon}</div>
               <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 20, fontWeight: 700, color: "#1a1208", marginBottom: 10 }}>{title}</div>
@@ -624,7 +624,7 @@ function ContactPage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-              {[["📍","Address","123 Gold Market, Surat"],["📞","Phone","+91 98765 43210"],["🕐","Hours","Mon–Sat: 10am–8pm"],["✉️","Email","info@kiranjewellers.com"]].map(([icon,label,val]) => (
+              {[["📍","Address","123 Gold Market, Surat"],["📞","Phone","+91 98765 43210"],["🕐","Hours","Mon–Sat: 10am–8pm"],["✉️","Email","info@Kishanjewellers.com"]].map(([icon,label,val]) => (
                 <div key={label} style={{ background: "#fffdf7", border: "1px solid #f0e0c0", borderRadius: 12, padding: "16px" }}>
                   <div style={{ fontSize: 22, marginBottom: 6 }}>{icon}</div>
                   <div style={{ fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", color: "#c9a84c", marginBottom: 4 }}>{label}</div>
@@ -758,7 +758,7 @@ export default function App() {
           <button onClick={() => setActivePage("Home")} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg,#c9a84c,#f0d080)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>💍</div>
             <div>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700, fontSize: 17, color: "#1a1208", lineHeight: 1.1 }}>Kiran</div>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700, fontSize: 17, color: "#1a1208", lineHeight: 1.1 }}>Kishan</div>
               <div style={{ fontSize: 9, letterSpacing: 3, textTransform: "uppercase", color: "#c9a84c" }}>Jewellers</div>
             </div>
           </button>
@@ -780,9 +780,9 @@ export default function App() {
 
       <footer style={{ width: "100%", borderTop: "1px solid #f0e0c0", padding: "36px 40px", textAlign: "center", background: "#fffdf7" }}>
         <div style={{ fontSize: 24, marginBottom: 8 }}>💍</div>
-        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 17, color: "#1a1208", marginBottom: 4 }}>Kiran Jewellers</div>
+        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 17, color: "#1a1208", marginBottom: 4 }}>Kishan Jewellers</div>
         <div style={{ fontSize: 13, color: "#8a6f4e" }}>Crafting memories, one jewel at a time · Surat, Gujarat</div>
-        <div style={{ fontSize: 11, color: "#c9a84c", marginTop: 10 }}>© 2024 Kiran Jewellers. All rights reserved.</div>
+        <div style={{ fontSize: 11, color: "#c9a84c", marginTop: 10 }}>© 2024 Kishan Jewellers. All rights reserved.</div>
       </footer>
     </div>
   );
